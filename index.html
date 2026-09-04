@@ -316,6 +316,53 @@
     .ag-panel__open{display:none}
   }
 
+  /* ========== 结尾页：感谢观看 ========== */
+  .thanks-section{
+    position:relative;
+    display:flex;align-items:center;justify-content:center;
+    min-height:78vh;
+    margin-top:4rem;
+    padding:5rem 1.5rem;
+    text-align:center;
+    overflow:hidden;
+    background:
+      radial-gradient(circle at 50% 10%, rgba(234,88,12,.08), transparent 58%),
+      linear-gradient(180deg,#ffffff 0%,var(--bg-muted) 100%);
+    border-top:1px solid var(--border-color);
+    border-radius:var(--radius-lg) var(--radius-lg) 0 0;
+  }
+  .thanks-grid{
+    position:absolute;inset:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(234,88,12,.05) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(234,88,12,.05) 1px,transparent 1px);
+    background-size:44px 44px;
+    -webkit-mask-image:radial-gradient(circle at 50% 42%,#000,transparent 74%);
+    mask-image:radial-gradient(circle at 50% 42%,#000,transparent 74%);
+  }
+  .thanks-content{position:relative;z-index:1;max-width:680px;margin:0 auto}
+  .thanks-content .section-tag{justify-content:center;margin-bottom:1.3rem}
+  .thanks-en{
+    font-family:var(--font-display);color:var(--text-tertiary);
+    font-size:1.05rem;letter-spacing:5px;text-transform:uppercase;
+    margin-bottom:1rem;
+  }
+  .thanks-title{
+    font-size:clamp(2.5rem,9vw,4.4rem);font-weight:900;
+    letter-spacing:-1px;line-height:1.08;margin-bottom:1.3rem;
+  }
+  .thanks-title .dot{color:var(--accent-color)}
+  .thanks-sub{font-size:.98rem;color:var(--text-secondary);line-height:1.9;margin-bottom:2.4rem}
+  .btn-to-top{
+    display:inline-flex;align-items:center;gap:9px;
+    background:var(--text-primary);color:#fff;
+    font-family:var(--font-mono);font-size:.82rem;letter-spacing:1.5px;
+    padding:12px 24px;border-radius:999px;
+    box-shadow:var(--shadow-md);transition:var(--transition);
+  }
+  .btn-to-top:hover{background:var(--accent-color);transform:translateY(-2px)}
+  .btn-to-top svg{width:15px;height:15px}
+
   .footer{
     text-align:left;padding:2rem 1rem;border-top:1px solid var(--border-color);
     color:var(--text-tertiary);font-size:.85rem;font-family:var(--font-mono);margin-top:4rem;
@@ -533,6 +580,8 @@
     .contact-label{width:auto;font-size:.64rem;letter-spacing:0}
     .contact-value{font-size:.88rem}
     .copy-btn{display:none}
+    .float-nav{gap:1px;padding:4px}
+    .nav-tab{padding:8px 9px;font-size:.72rem}
   }
 
   /* ========== 打印 / 导出 PDF ========== */
@@ -555,6 +604,8 @@
     .dp-item{border-bottom:1px solid #eee}
     .dp-item::before{display:none}
     .overlay{display:none!important}
+    .thanks-section{min-height:0;padding:3rem 1rem;margin-top:3rem;background:#fff;border:1px solid #eee;border-radius:0}
+    .thanks-grid{display:none!important}
     a{border-bottom:0}
   }
 
@@ -824,6 +875,26 @@
     </section>
   </main>
 
+  <!-- ================= 结尾页：感谢观看 ================= -->
+  <section class="thanks-section" id="thanks" aria-label="感谢观看">
+    <div class="thanks-grid" aria-hidden="true"></div>
+    <div class="thanks-content fade-in-up">
+      <div class="section-tag">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3L4 14h7v7l9-11h-7V3z"/></svg>
+        <span>END_OF_SESSION // 2026</span>
+      </div>
+      <p class="thanks-en">THANKS FOR WATCHING</p>
+      <h2 class="thanks-title">感谢您的观看<span class="dot">。</span></h2>
+      <p class="thanks-sub">保持纯粹 ，永远进步 —— 期待与你的下一次相遇。</p>
+      <button class="btn-to-top" type="button"
+              onclick="window.scrollTo({top:0,behavior:'smooth'})"
+              aria-label="返回页面顶部">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+        返回顶部
+      </button>
+    </div>
+  </section>
+
   <footer class="footer">
     © 2026 薛浩宇 &nbsp;·&nbsp; KEEP PURE, KEEP GOING &nbsp;·&nbsp; BUILD WITH AI
   </footer>
@@ -836,6 +907,7 @@
   <button class="nav-tab" data-target="education">教育</button>
   <button class="nav-tab" data-target="portfolio">作品</button>
   <button class="nav-tab" data-target="certificates">证书</button>
+  <button class="nav-tab" data-target="thanks">致谢</button>
 </nav>
 
 <!-- ================= AI+编程 空间 ================= -->
@@ -1123,7 +1195,7 @@
   }
 
   var navTabs = Array.prototype.slice.call(document.querySelectorAll(".nav-tab"));
-  var navTargets = ["top","identity","education","portfolio","certificates"];
+  var navTargets = ["top","identity","education","portfolio","certificates","thanks"];
   function setActiveNav(id){
     navTabs.forEach(function(t){ t.classList.toggle("active", t.dataset.target === id); });
   }
@@ -1143,7 +1215,7 @@
       if(en.isIntersecting) setActiveNav(en.target.id || "top");
     });
   }, {rootMargin:"-38% 0px -55% 0px"});
-  ["identity","education","portfolio","certificates"].forEach(function(id){
+  ["identity","education","portfolio","certificates","thanks"].forEach(function(id){
     var el = document.getElementById(id);
     if(el) spy.observe(el);
   });
